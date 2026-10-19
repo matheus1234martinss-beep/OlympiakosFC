@@ -105,75 +105,139 @@ public class MainActivity extends Activity {
         alvo.addView(v, new LinearLayout.LayoutParams(1, altura));
     }
 
-    private void mostrarInicio() {
-        prepararTela();
+    
+private void mostrarInicio() {
+    prepararTela();
 
-        ScrollView scroll = new ScrollView(this);
-        LinearLayout conteudo = new LinearLayout(this);
-        conteudo.setOrientation(LinearLayout.VERTICAL);
-        scroll.addView(conteudo);
+    ScrollView scroll = new ScrollView(this);
+    LinearLayout conteudo = new LinearLayout(this);
+    conteudo.setOrientation(LinearLayout.VERTICAL);
+    scroll.addView(conteudo);
 
-        LinearLayout topo = horizontal();
-        LinearLayout marca = new LinearLayout(this);
-        marca.setOrientation(LinearLayout.VERTICAL);
-        TextView pequeno = texto("CLUBE • FUTEBOL • COMUNIDADE", 10, MUTED);
-        pequeno.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        TextView titulo = texto("OLYMPIAKOS", 28, WHITE);
-        titulo.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        TextView fc = texto("FC  /  SEJA PARTE DA HISTÓRIA", 12, RED);
-        fc.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        marca.addView(pequeno);
-        marca.addView(titulo);
-        marca.addView(fc);
-        topo.addView(marca, new LinearLayout.LayoutParams(0, -2, 1));
-        TextView escudo = texto("⚽", 34, WHITE);
-        escudo.setGravity(Gravity.CENTER);
-        escudo.setBackground(fundo(RED, 24, RED, 1));
-        LinearLayout.LayoutParams ep = new LinearLayout.LayoutParams(76, 76);
-        topo.addView(escudo, ep);
-        conteudo.addView(topo);
-        espacador(conteudo, 24);
+    // CABEÇALHO DO CLUBE
+    LinearLayout topo = horizontal();
 
-        LinearLayout hero = new LinearLayout(this);
-        hero.setOrientation(LinearLayout.VERTICAL);
-        hero.setPadding(20, 22, 20, 22);
-        hero.setBackground(fundo(Color.rgb(39, 18, 25), 24, Color.rgb(92, 24, 42), 1));
-        TextView tag = texto("NOSSO TIME. NOSSA PAIXÃO.", 11, RED);
-        tag.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        hero.addView(tag);
-        TextView chamada = texto("A RESENHA\\nCOMEÇA AQUI.", 27, WHITE);
-        chamada.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        hero.addView(chamada);
-        TextView desc = texto("Acompanhe o elenco e viva o Olympiakos FC.", 14, MUTED);
-        hero.addView(desc);
-        conteudo.addView(hero);
-        espacador(conteudo, 22);
+    LinearLayout marca = new LinearLayout(this);
+    marca.setOrientation(LinearLayout.VERTICAL);
 
-        TextView secao = texto("ÁREA DO CLUBE", 12, MUTED);
-        secao.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        conteudo.addView(secao);
-        espacador(conteudo, 8);
+    TextView titulo = texto("OLYMPIAKOS FC", 25, WHITE);
+    titulo.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
 
-        adicionarCartaoMenu(conteudo, "01", "ELENCO DE JOGADORES",
-                jogadores.size() + " jogadores cadastrados", "›", this::mostrarJogadores);
-        adicionarCartaoMenu(conteudo, "02", "CAMPEONATOS",
-                "Competições e resultados", "›",
-                () -> aviso("A área de campeonatos será adicionada em uma próxima atualização."));
-        adicionarCartaoMenu(conteudo, "03", "MURAL ONLINE",
-                "Novidades e publicações do time", "›",
-                () -> aviso("O mural online será conectado a um serviço online em uma próxima etapa."));
-        adicionarCartaoMenu(conteudo, "04", "MINI-GAME",
-                "Desafie o goleiro nos pênaltis", "›",
-                () -> aviso("O mini-game será adicionado em uma próxima atualização."));
+    TextView lema = texto("PAIXÃO E HONRA", 13, RED);
+    lema.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
 
-        espacador(conteudo, 16);
-        TextView rodape = texto("OLYMPIAKOS FC  •  JUNTOS PELO TIME", 10, MUTED);
-        rodape.setGravity(Gravity.CENTER);
-        conteudo.addView(rodape);
+    marca.addView(titulo);
+    marca.addView(lema);
 
-        layout.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
-        setContentView(layout);
-    }
+    topo.addView(marca,
+        new LinearLayout.LayoutParams(0, -2, 1));
+
+    TextView escudo = texto("⚽", 34, WHITE);
+    escudo.setGravity(Gravity.CENTER);
+    escudo.setBackground(fundo(RED, 22, RED, 1));
+
+    topo.addView(escudo,
+        new LinearLayout.LayoutParams(72, 72));
+
+    conteudo.addView(topo);
+    espacador(conteudo, 22);
+
+    // DESTAQUE PRINCIPAL
+    LinearLayout destaque = new LinearLayout(this);
+    destaque.setOrientation(LinearLayout.VERTICAL);
+    destaque.setPadding(20, 22, 20, 22);
+    destaque.setBackground(
+        fundo(RED, 22, RED, 1));
+
+    TextView chamada = texto(
+        "NOSSO CLUBE.\\nNOSSA HISTÓRIA.", 25, WHITE);
+    chamada.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+
+    TextView descricao = texto(
+        "Juntos dentro e fora de campo.", 14, WHITE);
+
+    destaque.addView(chamada);
+    destaque.addView(descricao);
+    conteudo.addView(destaque);
+
+    espacador(conteudo, 22);
+
+    // PRÓXIMO JOGO
+    TextView jogoTitulo = texto("PRÓXIMO JOGO", 17, WHITE);
+    jogoTitulo.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+    conteudo.addView(jogoTitulo);
+
+    LinearLayout jogo = new LinearLayout(this);
+    jogo.setOrientation(LinearLayout.VERTICAL);
+    jogo.setPadding(16, 16, 16, 16);
+    jogo.setBackground(fundo(CARD, 18,
+        Color.rgb(65, 65, 72), 1));
+
+    TextView confronto = texto(
+        "OLYMPIAKOS FC  ×  ADVERSÁRIO", 16, WHITE);
+    confronto.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+
+    TextView jogoInfo = texto(
+        "Data, horário e local a definir", 13, MUTED);
+
+    jogo.addView(confronto);
+    jogo.addView(jogoInfo);
+    conteudo.addView(jogo);
+
+    espacador(conteudo, 22);
+
+    // ÁREAS DO APLICATIVO
+    TextView secoes = texto("ÁREA DO CLUBE", 17, WHITE);
+    secoes.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+    conteudo.addView(secoes);
+
+    adicionarCartaoMenu(conteudo, "01",
+        "ELENCO DE JOGADORES",
+        jogadores.size() + " jogadores cadastrados",
+        "›", this::mostrarJogadores);
+
+    adicionarCartaoMenu(conteudo, "02",
+        "NOTÍCIAS DO CLUBE",
+        "Novidades e comunicados",
+        "›", () -> aviso(
+            "A área de notícias será desenvolvida na próxima etapa."));
+
+    adicionarCartaoMenu(conteudo, "03",
+        "ESTATÍSTICAS",
+        "Jogos, gols e assistências dos atletas",
+        "›", () -> aviso(
+            "Vamos criar o painel de estatísticas dos jogadores."));
+
+    adicionarCartaoMenu(conteudo, "04",
+        "MURAL DA GALERA",
+        "Fotos, curtidas e comentários",
+        "›", () -> aviso(
+            "O mural com compartilhamento online será desenvolvido na próxima etapa."));
+
+    adicionarCartaoMenu(conteudo, "05",
+        "CALENDÁRIO DE JOGOS",
+        "Organize partidas e registre resultados",
+        "›", () -> aviso(
+            "O calendário de partidas será desenvolvido na próxima etapa."));
+
+    adicionarCartaoMenu(conteudo, "06",
+        "MINI-GAME",
+        "Desafie o goleiro nos pênaltis",
+        "›", () -> aviso(
+            "O mini-game será desenvolvido em uma próxima etapa."));
+
+    espacador(conteudo, 18);
+
+    TextView rodape = texto(
+        "OLYMPIAKOS FC • PAIXÃO E HONRA", 11, MUTED);
+    rodape.setGravity(Gravity.CENTER);
+    conteudo.addView(rodape);
+
+    layout.addView(scroll,
+        new LinearLayout.LayoutParams(-1, 0, 1));
+
+    setContentView(layout);
+}
 
     private void adicionarCartaoMenu(LinearLayout alvo, String numero, String nome,
                                       String detalhe, String seta, Runnable acao) {
